@@ -1,7 +1,10 @@
 // ==UserScript==
 // @name         ITD STATS
 // @namespace    http://tampermonkey.net/
-// @version      12.0
+// @homepageURL  https://github.com/Dima-programmer
+// @downloadURL  https://github.com/Dima-programmer/ITD-STATS-AI/raw/refs/heads/main/main.user.js
+// @updateURL    https://github.com/Dima-programmer/ITD-STATS-AI/raw/refs/heads/main/main.user.js
+// @version      12.1
 // @description  AI‑Enhanced Analytics for ITD — полная статистика, умные топы, ИИ‑советы
 // @author       skorlange, dmitrii_gr
 // @match        https://xn--d1ah4a.com/*
@@ -233,41 +236,43 @@
         html = html.replace(/`([^`]+)`/g, '<code style="background:var(--input-bg); padding:2px 6px; border-radius:4px; color:var(--primary);">$1</code>');
         html = html.replace(/^> (.*$)/gm, '<blockquote style="border-left:3px solid var(--primary); padding-left:12px; margin:8px 0; color:var(--text-secondary);">$1</blockquote>');
         // Таблицы
-        const tableRegex = /(\|.*\|[\r\n]+\|[-:\s|]+\|[\r\n]+(\|.*\|[\r\n]+)+)/g;
-        html = html.replace(tableRegex, (match) => {
-            const lines = match.trim().split(/\r?\n/);
-            if (lines.length < 2) return match;
-            const headerLine = lines[0];
-            const separatorLine = lines[1];
-            const dataLines = lines.slice(2);
-            const headers = headerLine.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
-            const aligns = separatorLine.split('|').filter(cell => cell.trim() !== '').map(cell => {
-                const align = cell.trim();
-                if (align.startsWith(':') && align.endsWith(':')) return 'center';
-                if (align.endsWith(':')) return 'right';
-                if (align.startsWith(':')) return 'left';
-                return 'left';
-            });
-            let tableHtml = '<table style="width:100%; border-collapse:collapse; margin:16px 0; background:var(--card-bg); border-radius:8px; overflow:hidden;">';
-            tableHtml += '<thead>止';
-            headers.forEach((h, idx) => {
-                const align = aligns[idx] || 'left';
-                tableHtml += `<th style="padding:10px 12px; text-align:${align}; border-bottom:2px solid var(--primary); color:var(--primary);">${h}</th>`;
-            });
-            tableHtml += '</thead><tbody>';
-            dataLines.forEach(line => {
-                if (line.trim() === '') return;
-                const cells = line.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
-                tableHtml += '歌厅';
-                cells.forEach((cell, idx) => {
-                    const align = aligns[idx] || 'left';
-                    tableHtml += `<td style="padding:8px 12px; text-align:${align}; border-bottom:1px solid var(--border);">${cell}〈td>`;
-                });
-                tableHtml += '〈tr>';
-            });
-            tableHtml += '</tbody>〈table>';
-            return tableHtml;
+const tableRegex = /(\|.*\|[\r\n]+\|[-:\s|]+\|[\r\n]+(\|.*\|[\r\n]+)+)/g;
+html = html.replace(tableRegex, (match) => {
+    const lines = match.trim().split(/\r?\n/);
+    if (lines.length < 2) return match;
+    const headerLine = lines[0];
+    const separatorLine = lines[1];
+    const dataLines = lines.slice(2);
+    const headers = headerLine.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
+    const aligns = separatorLine.split('|').filter(cell => cell.trim() !== '').map(cell => {
+        const align = cell.trim();
+        if (align.startsWith(':') && align.endsWith(':')) return 'center';
+        if (align.endsWith(':')) return 'right';
+        if (align.startsWith(':')) return 'left';
+        return 'left';
+    });
+    let tableHtml = '<table style="width:100%; border-collapse:collapse; margin:16px 0; background:var(--card-bg); border-radius:8px; overflow:hidden;">';
+    tableHtml += '<thead>';
+    tableHtml += '<tr>';
+    headers.forEach((h, idx) => {
+        const align = aligns[idx] || 'left';
+        tableHtml += `<th style="padding:10px 12px; text-align:${align}; border-bottom:2px solid var(--primary); color:var(--primary);">${h}</th>`;
+    });
+    tableHtml += '</tr>';
+    tableHtml += '</thead><tbody>';
+    dataLines.forEach(line => {
+        if (line.trim() === '') return;
+        const cells = line.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
+        tableHtml += '<tr>';
+        cells.forEach((cell, idx) => {
+            const align = aligns[idx] || 'left';
+            tableHtml += `<td style="padding:8px 12px; text-align:${align}; border-bottom:1px solid var(--border);">${cell}</td>`;
         });
+        tableHtml += '</tr>';
+    });
+    tableHtml += '</tbody></table>';
+    return tableHtml;
+});
         html = html.replace(/<li>(.*?)<\/li>(?=\s*<li>)/g, '<li>$1</li>');
         html = html.replace(/(<li>.*<\/li>)/s, '<ul style="margin:8px 0; padding-left:20px;">$1</ul>');
         html = html.replace(/\n/g, '<br>');
