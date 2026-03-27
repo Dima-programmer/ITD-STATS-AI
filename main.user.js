@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name         ITD STATS
-// @namespace    http://tampermonkey.net/
 // @homepageURL  https://github.com/Dima-programmer
 // @downloadURL  https://github.com/Dima-programmer/ITD-STATS-AI/raw/refs/heads/main/main.user.js
 // @updateURL    https://github.com/Dima-programmer/ITD-STATS-AI/raw/refs/heads/main/main.user.js
-// @version      12.1
+// @version      12.2
 // @description  AI‑Enhanced Analytics for ITD — полная статистика, умные топы, ИИ‑советы
 // @author       skorlange, dmitrii_gr
 // @match        https://xn--d1ah4a.com/*
@@ -1481,17 +1480,20 @@ async function fetchAITops(posts, onStatus, onReasoning) {
 
             // TABS
             const tabsContainer = document.createElement('div');
-            tabsContainer.style.cssText = `
-                display: flex;
-                border-bottom: 1px solid var(--border);
-                background: var(--bg-dark);
-                backdrop-filter: blur(8px);
-                padding: 0 20px;
-                position: sticky;
-                top: 0;
-                z-index: 9;
-                flex-wrap: wrap;
-            `;
+tabsContainer.style.cssText = `
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-dark);
+    backdrop-filter: blur(8px);
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    gap: 4px 0;
+    overflow-x: hidden;
+    max-width: 100%;
+`;
             tabsContainer.innerHTML = `
                 <button class="tab-btn active" data-tab="stats">Общая статистика</button>
                 <button class="tab-btn" data-tab="tops">ТОПЫ</button>
@@ -1508,6 +1510,7 @@ async function fetchAITops(posts, onStatus, onReasoning) {
             contentScroll.style.cssText = `
                 flex: 1;
                 overflow-y: auto;
+                overflow-x: hidden;
                 padding: 24px 28px;
             `;
 
