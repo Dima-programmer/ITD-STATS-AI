@@ -3,7 +3,7 @@
 // @homepageURL  https://github.com/Dima-programmer
 // @downloadURL  https://github.com/Dima-programmer/ITD-STATS-AI/raw/refs/heads/main/main.user.js
 // @updateURL    https://github.com/Dima-programmer/ITD-STATS-AI/raw/refs/heads/main/main.user.js
-// @version      12.2
+// @version      12.3
 // @description  AI‑Enhanced Analytics for ITD — полная статистика, умные топы, ИИ‑советы
 // @author       skorlange, dmitrii_gr
 // @match        https://xn--d1ah4a.com/*
@@ -1184,25 +1184,41 @@ async function fetchAITops(posts, onStatus, onReasoning) {
                 const style = document.createElement('style');
                 style.id = 'itd-stats-full-style';
                 style.textContent = `
-                    * {
-                        scrollbar-width: thin;
-                        scrollbar-color: var(--primary) #2a2a2a;
-                    }
-                    ::-webkit-scrollbar {
-                        width: 8px;
-                        height: 8px;
-                    }
-                    ::-webkit-scrollbar-track {
-                        background: #2a2a2a;
-                        border-radius: 4px;
-                    }
-                    ::-webkit-scrollbar-thumb {
-                        background: var(--primary);
-                        border-radius: 4px;
-                    }
-                    ::-webkit-scrollbar-thumb:hover {
-                        background: var(--primary-hover);
-                    }
+    .history-container::-webkit-scrollbar,
+    .achievements-container::-webkit-scrollbar,
+    .tops-container::-webkit-scrollbar,
+    .top-item::-webkit-scrollbar,
+    .settings-group::-webkit-scrollbar,
+    .smoke-bg::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    .history-container::-webkit-scrollbar-track,
+    .achievements-container::-webkit-scrollbar-track,
+    .tops-container::-webkit-scrollbar-track,
+    .top-item::-webkit-scrollbar-track,
+    .settings-group::-webkit-scrollbar-track,
+    .smoke-bg::-webkit-scrollbar-track {
+        background: #2a2a2a;
+        border-radius: 4px;
+    }
+    .history-container::-webkit-scrollbar-thumb,
+    .achievements-container::-webkit-scrollbar-thumb,
+    .tops-container::-webkit-scrollbar-thumb,
+    .top-item::-webkit-scrollbar-thumb,
+    .settings-group::-webkit-scrollbar-thumb,
+    .smoke-bg::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 4px;
+    }
+    .history-container::-webkit-scrollbar-thumb:hover,
+    .achievements-container::-webkit-scrollbar-thumb:hover,
+    .tops-container::-webkit-scrollbar-thumb:hover,
+    .top-item::-webkit-scrollbar-thumb:hover,
+    .settings-group::-webkit-scrollbar-thumb:hover,
+    .smoke-bg::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-hover);
+    }
 
                     .tab-btn {
                         background: none;
